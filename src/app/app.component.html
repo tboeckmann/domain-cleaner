@@ -23,7 +23,7 @@
     </div>
 
     <div class="col-md-4">
-      <h2>Results:</h2>
+      <h2>Results ({{outputList.length}}):</h2>
       <p>&nbsp;</p>
       <button type="button" class="btn btn-secondary"
         (click)='copyToClipboard( outputListAsList(outputList) )'>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="col-md-4">
-      <h2>Rejects:</h2>
+      <h2>Rejects ({{rejectedOutputList.length}}):</h2>
       <p>(probably not domains)</p>
       <button type="button" class="btn btn-secondary"
         (click)='copyToClipboard(outputListAsList(rejectedOutputList))'>
