@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -12,6 +13,7 @@ export class AppComponent implements OnInit {
   public title: string = 'Domain cleaner for lists of domains, emails, urls etc.';
   public domains: string = "domain.com";
   public outputList: any[] = [];
+  public rejectedOutputList: any[] = [];
 
   constructor(private _fb: FormBuilder) { } // form builder simplify form initialization
 
@@ -26,17 +28,25 @@ export class AppComponent implements OnInit {
     // Get clean URL from website box
     getParsedDomains() {
       var output = []
+      var rejectedOutput = []
+
       var domains = this.domainForm.controls.domains.value
       var inputs = domains.split(/[\t\r\n ,]+/);
+      
       console.log('inputs',inputs)
+      
       inputs.forEach(websiteString => {
         var cleanString = this.parseWebsiteString(websiteString)
-        if (output.indexOf(cleanString) === -1) {
-          output.push(cleanString);
+        if (output.indexOf(cleanString) === -1) { // remove dupes
+          // if there are no '.', then it ain't a domain
+          websiteString.indexOf(".") === -1 ? rejectedOutput.push(cleanString) : output.push(cleanString);
         }
       })
+      this.rejectedOutputList = rejectedOutput.sort()
       this.outputList = output.sort()
+      
       console.log('output',output)
+      console.log('rejected output',output)
     };
 
     // Extract domain from known formats (strip 'http*' and remove www, www2 etc and remove trailing slashes )
@@ -50,14 +60,19 @@ export class AppComponent implements OnInit {
       // split at slashes and return first value (the domain)
       if (websiteString.indexOf("/") > -1) {
         websiteString = websiteString.split('/')[0];
-      } 
+      }
+
+      // split at '@' for any emails and take second value
+      if (websiteString.indexOf("@") > -1) {
+        websiteString = websiteString.split('@')[1];
+      }
       
       return websiteString;
       
     };
 
-    outputListAsList() {
-      return this.outputList.join("\n")
+    outputListAsList(list) {
+      return list.join("\n")
     }
 
     copyToClipboard(text) {

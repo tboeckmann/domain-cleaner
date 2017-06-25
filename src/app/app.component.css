@@ -1,4 +1,6 @@
+.table-results {
+   margin-top: 15px;
+}
 .table-results td{
-    margin-top: 15px;
     border: 1px solid grey;
 }

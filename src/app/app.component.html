@@ -6,12 +6,12 @@
     <br>
     Duplicates will be removed.
   </p>
-</div>
-<div class="container">
-
+<!--</div>
+<div class="container">-->
 
   <div class="row">
-    <div class="col col-5">
+
+    <div class="col-md-4">
       <h2>Enter data:</h2>
       <form [formGroup]="domainForm" novalidate>
         <div class="form-group">
@@ -21,11 +21,13 @@
         <button type="button" class="btn btn-success" (click)="getParsedDomains()">GO!</button>
       </form>
     </div>
-    <div class="col col-5">
+
+    <div class="col-md-4">
       <h2>Results:</h2>
+      <p>&nbsp;</p>
       <button type="button" class="btn btn-secondary"
-        (click)='copyToClipboard(outputListAsList())'>
-          Copy list to clipboard
+        (click)='copyToClipboard( outputListAsList(outputList) )'>
+          Copy domains to clipboard
       </button>
       <table class="table-results">
         <tr *ngFor="let domain of outputList">
@@ -33,9 +35,21 @@
         </tr>
       </table>
     </div>
-    <div class="col col-2">
-        
+
+    <div class="col-md-4">
+      <h2>Rejects:</h2>
+      <p>(probably not domains)</p>
+      <button type="button" class="btn btn-secondary"
+        (click)='copyToClipboard(outputListAsList(rejectedOutputList))'>
+          Copy rejects to clipboard
+      </button>
+      <table class="table-results">
+        <tr *ngFor="let reject of rejectedOutputList">
+          <td>{{reject}}</td>
+        </tr>
+      </table>
     </div>
+
   </div>
 
 
