@@ -26,24 +26,44 @@ export class AppComponent implements OnInit {
     // Get clean URL from website box
     getParsedDomains() {
       var output = []
-      var inputs = this.domains.split(/[\t\r\n ,]+/);
+      var domains = this.domainForm.controls.domains.value
+      var inputs = domains.split(/[\t\r\n ,]+/);
       console.log('inputs',inputs)
       inputs.forEach(websiteString => {
-        output.push(this.parseWebsiteString(websiteString));
+        var cleanString = this.parseWebsiteString(websiteString)
+        if (output.indexOf(cleanString) === -1) {
+          output.push(cleanString);
+        }
       })
-      this.outputList = output
+      this.outputList = output.sort()
+      console.log('output',output)
     };
 
     // Extract domain from known formats (strip 'http*' and remove www, www2 etc and remove trailing slashes )
     parseWebsiteString(websiteString) {
       var match = websiteString.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+      
+      // strip the http[s], www etc.
       if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
-        return match[2];
-      } else {
-        return null;
+        websiteString = match[2];
       }
+      // split at slashes and return first value (the domain)
+      if (websiteString.indexOf("/") > -1) {
+        websiteString = websiteString.split('/')[0];
+      } 
+      
+      return websiteString;
+      
     };
 
+    outputListAsList() {
+      return this.outputList.join("\n")
+    }
+
+    copyToClipboard(text) {
+      window.prompt("Ctrl+C (Windows) or Cmd+C (Mac) to copy list", text);
+    }
+    
 
 
 }

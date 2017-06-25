@@ -1,29 +1,51 @@
 <!--The whole content below can be removed with the new code.-->
-<div style="text-align:center">
+<div class="container">
   <h1>{{title}}</h1>
+  <p>
+    <!--Any incomplete URLs or string that do not contain domains will be removed.-->
+    <br>
+    Duplicates will be removed.
+  </p>
 </div>
-  <div>
-    <form [formGroup]="domainForm" novalidate>
+<div class="container">
 
-      <div>
-        <label>Domains</label>
-        <input type="textarea" formControlName="domains">
-        <small [hidden]="myForm.controls.domains.valid || (myForm.controls.domains.pristine && !submitted)">
-            Domains are required.
-        </small>
-      </div>
 
-      <button (click)="getParsedDomains()">GO!</button>
-    </form>
+  <div class="row">
+    <div class="col col-5">
+      <h2>Enter data:</h2>
+      <form [formGroup]="domainForm" novalidate>
+        <div class="form-group">
+          <label>Domains</label>
+          <textarea class="form-control" rows=8 formControlName="domains"></textarea>
+        </div>
+        <button type="button" class="btn btn-success" (click)="getParsedDomains()">GO!</button>
+      </form>
+    </div>
+    <div class="col col-5">
+      <h2>Results:</h2>
+      <button type="button" class="btn btn-secondary"
+        (click)='copyToClipboard(outputListAsList())'>
+          Copy list to clipboard
+      </button>
+      <table class="table-results">
+        <tr *ngFor="let domain of outputList">
+          <td>{{domain}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col col-2">
+        
+    </div>
   </div>
 
-  <div>
-    <table>
-      <tr *ngFor="let domain of outputList">
-        <td>{{domain}}</td>
-      </tr>
-    </table>
-    
-  </div>
+
+</div>
+
+
+
+
+<!-- 
+http://pop.com popppp.com/posld
+-->
 
 
