@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
       this.outputList = output.sort()
       
       console.log('output',output)
-      console.log('rejected output',output)
+      console.log('rejected output',rejectedOutput)
     };
 
     // Extract domain from known formats (strip 'http*' and remove www, www2 etc and remove trailing slashes )
