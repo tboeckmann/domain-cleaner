@@ -27,7 +27,13 @@
       <p>&nbsp;</p>
       <button type="button" class="btn btn-secondary"
         (click)='copyToClipboard( outputListAsList(outputList) )'>
-          Copy domains to clipboard
+          Copy domains to clipboard (list for Excel)
+      </button>
+      <br>
+      <br>
+      <button type="button" class="btn btn-secondary"
+        (click)='copyToClipboard( outputListAsStrings(outputList) )'>
+          Copy domains to clipboard (list for scripts)
       </button>
       <table class="table-results">
         <tr *ngFor="let domain of outputList">

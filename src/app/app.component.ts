@@ -74,6 +74,10 @@ export class AppComponent implements OnInit {
     outputListAsList(list) {
       return list.join("\n")
     }
+    // Output list as: " 'a.com', 'b.com' "
+    outputListAsStrings(list) {
+      return "'" + list.join("', '") + "'"
+    }
 
     copyToClipboard(text) {
       window.prompt("Ctrl+C (Windows) or Cmd+C (Mac) to copy list", text);
