@@ -1,13 +1,17 @@
 <!--The whole content below can be removed with the new code.-->
 <div class="container">
   <h1>{{title}}</h1>
+  <p>Throw in emails, text, messy lists of urls and get a clean list of domains...</p>
   <p>
     <!--Any incomplete URLs or string that do not contain domains will be removed.-->
-    <br>
-    Duplicates will be removed.
+    Notes:
   </p>
-<!--</div>
-<div class="container">-->
+    <ul>
+      <li>Duplicates will be removed.</li>
+      <li>Words/ phrases without "." (dots) will be added to the rejects list.</li>
+    </ul>
+</div>
+<div class="container">
 
   <div class="row">
 
@@ -18,7 +22,8 @@
           <label>Domains</label>
           <textarea class="form-control" rows=8 formControlName="domains"></textarea>
         </div>
-        <button type="button" class="btn btn-success" (click)="getParsedDomains()">GO!</button>
+        <button type="button" class="btn btn-success" (click)="getParsedDomains()">GO!</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" (click)="clearDomains()">Clear</button>
       </form>
     </div>
 

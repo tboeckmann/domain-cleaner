@@ -11,7 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 export class AppComponent implements OnInit {
   public domainForm: FormGroup
   public title: string = 'Domain cleaner for lists of domains, emails, urls etc.';
-  public domains: string = "domain.com";
+  public domains: string = "http://domain.com, https://www.someOtherDomain.com\njohn@otherdomain.com\nOur website is at http://www.website.com";
   public outputList: any[] = [];
   public rejectedOutputList: any[] = [];
 
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
       
       this.domainForm = this._fb.group({
-        domains: ['domain.com', <any>Validators.required],
+        domains: [this.domains, <any>Validators.required],
       });
 
     }
@@ -81,6 +81,15 @@ export class AppComponent implements OnInit {
 
     copyToClipboard(text) {
       window.prompt("Ctrl+C (Windows) or Cmd+C (Mac) to copy list", text);
+    }
+
+    // Clear the domain box
+    clearDomains() {
+      this.domains = ''
+      this.domainForm = this._fb.group({
+        domains: [this.domains, <any>Validators.required],
+      });
+
     }
     
 
