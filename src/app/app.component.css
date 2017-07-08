@@ -2,5 +2,7 @@
    margin-top: 15px;
 }
 .table-results td{
+    max-width: 100px;
     border: 1px solid grey;
+    word-wrap: break-word;
 }

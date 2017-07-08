@@ -36,10 +36,24 @@ export class AppComponent implements OnInit {
       console.log('inputs',inputs)
       
       inputs.forEach(websiteString => {
+        let allowedCharacters = new RegExp('[a-z0-9\.\-]','i');
+        let disAllowedCharacters = new RegExp('[^a-z^0-9^\.^\-]','i');
+        let illegalStartEnd = new RegExp('[^a-z^0-9]','i')
         var cleanString = this.parseWebsiteString(websiteString)
-        if (output.indexOf(cleanString) === -1) { // remove dupes
-          // if there are no '.', then it ain't a domain
-          websiteString.indexOf(".") === -1 ? rejectedOutput.push(cleanString) : output.push(cleanString);
+
+        if (
+          (cleanString != "") && // remove empty
+          (output.indexOf(cleanString) === -1 && rejectedOutput.indexOf(cleanString) === -1) // remove dupes
+        ){ 
+
+          if (
+            ( disAllowedCharacters.test(cleanString) ) ||
+            ( cleanString.indexOf(".") === -1 ) // if there are no '.', then it ain't a domain
+          ) {
+            rejectedOutput.push(cleanString)
+          } else {
+            output.push(cleanString);
+         }
         }
       })
       this.rejectedOutputList = rejectedOutput.sort()
@@ -69,9 +83,21 @@ export class AppComponent implements OnInit {
       }
 
       // CLEANUP
-      // strip out words that end in "."
-      websiteString = websiteString.replace(/\.$/, "");
+      // strip out non-domain characters at the end of strings
       
+      function cleanUpStartEnd(websiteString) {
+        var dirtyStart = new RegExp('^[^a-z]','i')
+        var dirtyEnd = new RegExp('[^a-z]$','i')
+        while ( dirtyStart.test(websiteString) || dirtyEnd.test(websiteString) ) {
+          websiteString = websiteString.replace(/[^a-z]$/i, "").replace(/^[^a-z]/i, "");
+        }
+        
+        return websiteString;
+          
+      }
+
+      websiteString = cleanUpStartEnd(websiteString)
+
       return websiteString;
       
     };
@@ -94,7 +120,6 @@ export class AppComponent implements OnInit {
       this.domainForm = this._fb.group({
         domains: [this.domains, <any>Validators.required],
       });
-
     }
     
 
