@@ -57,6 +57,7 @@ export class AppComponent implements OnInit {
       if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
         websiteString = match[2];
       }
+
       // split at slashes and return first value (the domain)
       if (websiteString.indexOf("/") > -1) {
         websiteString = websiteString.split('/')[0];
@@ -66,6 +67,10 @@ export class AppComponent implements OnInit {
       if (websiteString.indexOf("@") > -1) {
         websiteString = websiteString.split('@')[1];
       }
+
+      // CLEANUP
+      // strip out words that end in "."
+      websiteString = websiteString.replace(/\.$/, "");
       
       return websiteString;
       
